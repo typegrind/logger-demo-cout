@@ -9,7 +9,7 @@
 
 #define TYPEGRIND_LOG_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
 #define TYPEGRIND_LOG_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression );  }
-#define TYPEGRIND_LOG_OP_DELETE(pointehAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )  ; }
+#define TYPEGRIND_LOG_OP_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )  ; }
 #define TYPEGRIND_LOG_OP_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
 
 #define TYPEGRIND_LOG_METHOD_INITIALIZER(targetName, locationStr, customName, flags, initializerExpression) ( typegrind::logger::initializer_scope<typegrind::logger::demo_cout>(targetName, locationStr, customName, flags) ? (initializerExpression) : (initializerExpression) )
