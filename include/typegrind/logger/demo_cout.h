@@ -2,15 +2,15 @@
 #ifndef TYPEGRIND_LOGGER_NOP_H_
 #define TYPEGRIND_LOGGER_NOP_H_
 
-#define TYPEGRIND_LOG_NEW(typeStr, locationStr, typeSize, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0} * (newExpression ) )
-#define TYPEGRIND_LOG_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, size} * (newExpression ) )
-#define TYPEGRIND_LOG_OP_NEW(typeStr, locationStr, typeSize, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0} * (newExpression ) )
-#define TYPEGRIND_LOG_OP_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, size} * (newExpression ) )
+#define TYPEGRIND_LOG_NEW(typeStr, locationStr, typeSize, newExpression) typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0, nullptr} * newExpression
+#define TYPEGRIND_LOG_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * newExpression 
+#define TYPEGRIND_LOG_OP_NEW(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
+#define TYPEGRIND_LOG_OP_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 
-#define TYPEGRIND_LOG_DELETE(pointerAddr, locationStr, deleteExpression) typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )
-#define TYPEGRIND_LOG_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )
-#define TYPEGRIND_LOG_OP_DELETE(pointehAddr, locationStr, deleteExpression) typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) 
-#define TYPEGRIND_LOG_OP_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) 
+#define TYPEGRIND_LOG_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
+#define TYPEGRIND_LOG_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression );  }
+#define TYPEGRIND_LOG_OP_DELETE(pointehAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )  ; }
+#define TYPEGRIND_LOG_OP_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
 
 #define TYPEGRIND_LOG_METHOD_INITIALIZER(targetName, locationStr, customName, flags, initializerExpression) ( typegrind::logger::initializer_scope<typegrind::logger::demo_cout>(targetName, locationStr, customName, flags) ? (initializerExpression) : (initializerExpression) )
 #define TYPEGRIND_LOG_METHOD_ENTER(targetName, locationStr, customName, flags) typegrind::logger::method_scope<typegrind::logger::demo_cout> typegrind_scope_guard(targetName, locationStr, customName, flags);
