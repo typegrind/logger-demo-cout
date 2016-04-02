@@ -7,8 +7,8 @@
 #define TYPEGRIND_LOG_OP_NEW(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 #define TYPEGRIND_LOG_OP_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 
-#define TYPEGRIND_LOG_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
-#define TYPEGRIND_LOG_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression );  }
+#define TYPEGRIND_LOG_DELETE(typeStr, canonicalTypeStr, locationStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
+#define TYPEGRIND_LOG_DELETE_ARRAY(typeStr, canonicalTypeStr, locationStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
 #define TYPEGRIND_LOG_OP_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )  ; }
 #define TYPEGRIND_LOG_OP_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
 
@@ -52,16 +52,19 @@ namespace typegrind
     template<typename T>
     struct entry_free
     {
-      const void* const   ptr;
+      const char*         typeStr;
+      const char*         canonicalTypeStr;
       const char*         locationStr;
-
-      entry_free(const void* const ptr, const char* locationStr)
-      : ptr(ptr)
-      , locationStr(locationStr)
-      {
-        T::get().log_free(*this);
-      }
+      const void*         ptr;
     };
+
+    template<typename T, typename O>
+    const O* operator*(entry_free<T> info, const O* ptr)
+    {
+      info.ptr = ptr;
+      T::get().log_free(info);
+      return ptr;
+    }
 
     // -----------------------------------------------
 

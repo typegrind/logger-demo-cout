@@ -25,7 +25,7 @@ namespace typegrind
 
     void demo_cout::log_free(entry_free<demo_cout> const& free_info)
     {
-      std::cout << "free at:" << free_info.locationStr << " addr:" << free_info.ptr << std::endl;
+      std::cout << "free at:" << free_info.locationStr << " type:" << free_info.typeStr << " canonical:" << free_info.canonicalTypeStr << " addr:" << free_info.ptr << std::endl;
     }
 
     void demo_cout::log_method_enter(method_scope<demo_cout> const& method_info)
