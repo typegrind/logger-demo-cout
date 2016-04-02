@@ -20,7 +20,7 @@ namespace typegrind
 
     void demo_cout::log_alloc(entry_alloc<demo_cout> const& alloc_info)
     {
-      std::cout << "allocation at:" << alloc_info.locationStr << " type:" << alloc_info.typeStr << " type_size:" << alloc_info.typeSize << " total_size:" << alloc_info.size << " addr:" << alloc_info.ptr << std::endl;
+      std::cout << "allocation at:" << alloc_info.locationStr << " type:" << alloc_info.typeStr << " canonical:" << alloc_info.canonicalTypeStr << " type_size:" << alloc_info.typeSize << " total_size:" << alloc_info.size << " addr:" << alloc_info.ptr << std::endl;
     }
 
     void demo_cout::log_free(entry_free<demo_cout> const& free_info)

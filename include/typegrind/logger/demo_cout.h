@@ -2,13 +2,13 @@
 #ifndef TYPEGRIND_LOGGER_NOP_H_
 #define TYPEGRIND_LOGGER_NOP_H_
 
-#define TYPEGRIND_LOG_NEW(typeStr, locationStr, typeSize, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0, nullptr} * newExpression)
-#define TYPEGRIND_LOG_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * newExpression)
+#define TYPEGRIND_LOG_NEW(locationStr, typeStr, canonicalTypeStr, typeSize, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, typeSize, 0, nullptr} * newExpression)
+#define TYPEGRIND_LOG_NEW_ARRAY(locationStr, typeStr, canonicalTypeStr, typeSize, size, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * newExpression)
 #define TYPEGRIND_LOG_OP_NEW(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 #define TYPEGRIND_LOG_OP_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 
-#define TYPEGRIND_LOG_DELETE(typeStr, canonicalTypeStr, locationStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
-#define TYPEGRIND_LOG_DELETE_ARRAY(typeStr, canonicalTypeStr, locationStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
+#define TYPEGRIND_LOG_DELETE(locationStr, typeStr, canonicalTypeStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
+#define TYPEGRIND_LOG_DELETE_ARRAY(locationStr, typeStr, canonicalTypeStr, deleteExpression) (typegrind::logger::entry_free<typegrind::logger::demo_cout>{typeStr, canonicalTypeStr, locationStr, nullptr} * ( deleteExpression ))
 #define TYPEGRIND_LOG_OP_DELETE(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression )  ; }
 #define TYPEGRIND_LOG_OP_DELETE_ARRAY(pointerAddr, locationStr, deleteExpression) { typegrind::logger::entry_free<typegrind::logger::demo_cout>(pointerAddr, locationStr) ; ( deleteExpression ) ; }
 
@@ -25,6 +25,7 @@ namespace typegrind
     struct entry_alloc
     {
       const char*         typeStr;
+      const char*         canonicalTypeStr;
       const char*         locationStr;
       const unsigned int  typeSize;
       const unsigned int  size;
