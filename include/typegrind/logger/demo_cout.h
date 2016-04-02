@@ -2,8 +2,8 @@
 #ifndef TYPEGRIND_LOGGER_NOP_H_
 #define TYPEGRIND_LOGGER_NOP_H_
 
-#define TYPEGRIND_LOG_NEW(typeStr, locationStr, typeSize, newExpression) typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0, nullptr} * newExpression
-#define TYPEGRIND_LOG_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * newExpression 
+#define TYPEGRIND_LOG_NEW(typeStr, locationStr, typeSize, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, 0, nullptr} * newExpression)
+#define TYPEGRIND_LOG_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) (typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * newExpression)
 #define TYPEGRIND_LOG_OP_NEW(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 #define TYPEGRIND_LOG_OP_NEW_ARRAY(typeStr, locationStr, typeSize, size, newExpression) ( typegrind::logger::entry_alloc<typegrind::logger::demo_cout>{typeStr, locationStr, typeSize, static_cast<unsigned int>(size), nullptr} * (newExpression ) )
 
